@@ -1,0 +1,76 @@
+<personagem nome="Manequim">
+	<esqueleto x="300" y="300" z="0">
+		<osso nome="Torço" width="80" angleZ="0" angleY="0" angleX="3.141592653589793">
+			<osso nome="Ombro Direito" width="50" angleZ="-1.5707963267948966" angleY="0" angleX="-1.4093533709854211">
+				<osso nome="Antebraço Direito" width="100" angleZ="0" angleY="-1.5707963267948966" angleX="0">
+					<osso nome="Braço Direito" width="100" angleZ="0" angleY="0" angleX="0">
+					<carne>
+						<pele absoluteAngleZ="0" absoluteAngleY="0" relativeAngleZ="0" relativeAngleY="0" relativeAngleX="0">
+							<linha id="1">
+								<ponto id="1" x="-15" y="0" size="3"></ponto>
+								<ponto id="2" x="-15" y="100" size="3"></ponto>
+							</linha>
+							<linha id="2">
+								<ponto id="3" x="15" y="0" size="3"></ponto>
+								<ponto id="4" x="15" y="100" size="3"></ponto>
+							</linha>
+						</pele>
+						<pele absoluteAngleZ="0" absoluteAngleY="0.7853981633974483" relativeAngleZ="0" relativeAngleY="0" relativeAngleX="0">
+							<linha id="1">
+								<ponto id="1" x="-15" y="0" size="3"></ponto>
+								<ponto id="2" x="-15" y="50" size="30"></ponto>
+							</linha>
+							<linha id="2">
+								<ponto id="3" x="15" y="0" size="3"></ponto>
+								<ponto id="4" x="15" y="50" size="30"></ponto>
+							</linha>
+						</pele>
+					</carne>
+						<osso nome="Mão1" width="20" angleZ="0" angleY="0.2748893571891069" angleX="0">
+							<osso nome="M1D1" width="15" angleZ="0" angleY="0" angleX="0">
+								<osso nome="M1D2" width="10" angleZ="0" angleY="0" angleX="0">
+									<osso nome="M1D3" width="5" angleZ="0" angleY="0" angleX="0">
+									</osso>
+								</osso>
+							</osso>
+						</osso>
+						<osso nome="Mão2" width="22" angleZ="0" angleY="0" angleX="0">
+							<osso nome="M2D1" width="18" angleZ="0" angleY="0" angleX="0">
+								<osso nome="M2D2" width="12" angleZ="0" angleY="0" angleX="0">
+									<osso nome="M2D3" width="6" angleZ="0" angleY="0" angleX="0">
+									</osso>
+								</osso>
+							</osso>
+						</osso>
+						<osso nome="Mão3" width="20" angleZ="0" angleY="-0.2748893571891069" angleX="0">
+							<osso nome="M3D1" width="15" angleZ="0" angleY="0" angleX="0">
+								<osso nome="M3D2" width="10" angleZ="0" angleY="0" angleX="0">
+									<osso nome="M3D3" width="5" angleZ="0" angleY="0" angleX="0">
+									</osso>
+								</osso>
+							</osso>
+						</osso>
+						<osso nome="Mão4" width="18" angleZ="0" angleY="-0.5366887449882564" angleX="0">
+							<osso nome="M4D1" width="10" angleZ="0" angleY="0" angleX="0">
+								<osso nome="M4D2" width="5" angleZ="0" angleY="0" angleX="0">
+									<osso nome="M4D3" width="5" angleZ="0" angleY="0" angleX="0">
+									</osso>
+								</osso>
+							</osso>
+						</osso>
+						<osso nome="Mão5" width="17" angleZ="0" angleY="0.6981317007977318" angleX="0">
+							<osso nome="M5D1" width="10" angleZ="0" angleY="0" angleX="0">
+								<osso nome="M5D2" width="5" angleZ="0" angleY="0" angleX="0">
+								</osso>
+							</osso>
+						</osso>
+					</osso>
+				</osso>
+			</osso>
+			<osso nome="Pescoço" width="30" angleZ="0" angleY="0" angleX="0">
+				<osso nome="Cabeça" width="60" angleZ="0" angleY="0" angleX="0">
+				</osso>
+			</osso>
+		</osso>
+	</esqueleto>
+</personagem>
