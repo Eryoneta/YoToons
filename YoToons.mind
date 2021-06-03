@@ -1,0 +1,423 @@
+<mind fontName="Comic Sans MS" fontSize="12" fontStyle="0">	<mod border="0" color="00FFFF" icons="" title="YoToons" x="16" y="-2">		<text>- Software de animação 2D.
+- Permite a criação de um modelo de personagem, montado em um esqueleto 3D.
+. Um processo mais rápido, requerindo que diferentes partes do personagem sejam desenhado aproximadamente em todos os ângulos. Um processo lento no começo, mas que permite que o personagem seja animado quase instantaneamente depois.
+. É como montar um carro para vencer uma maratona: Lento no começo, mas extremamente rápido depois. Ainda mais se houver peças que podem ser reutilizadas.
+- Tudo é formado por vetores, o que permite alterar detalhes de forma dinâmica.
+. O personagem não é simplesmente desenhado, é montado.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Hierarquia" x="15" y="7">		<text>- Um personagem tem um esqueleto que tem vários ossos. Cada osso tem uma carne que tem várias peles, que tem várias formas e linhas, que tem vários pontos.
+- Pontos tem id:
+. Para poder ligar duas carnes em junções.
+. Para poder ligar linhas em junções retas.
+- Linhas tem id:
+. Para poder pertencer a formas e também a pele.</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Personagem" x="15" y="10">		<text>* Personagem:
+- Usado para discernir diferentes personagens na tela.
+
++ Variáveis:
+- String nome;
+- Esqueleto esqueleto;
+- boolean show;	//Se Personagem é visível
+</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Esqueleto" x="24" y="10">		<text>* Esqueleto:
+- Usado para ligar o Personagem aos Ossos.
+
++ Variáveis:
+- Osso ossoBase;
+. setLocation();
+- boolean show;	//Se os Ossos são visíveis
+</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Osso" x="26" y="13">		<text>* Osso:
+- Usado para criar a estrutura onde a Carne fica.
+
++ Variáveis:
+- String nome;
+- Esqueleto esqueleto;
+- Ponto3D relativeLocal;	//Local relativo ao Osso-pai
+- Ponto3D absoluteLocal;	//Local absoluto na tela
+- double width;
+- Diretriz3D relativeDiretriz;	//Ângulos relativos ao Osso-pai
+- Diretriz3D limitMax;	//Ângulos-máximos permitidos
+- Diretriz3D limitMin;		//Ângulos-mínimos permitidos
+- double[][]orientation;	//Matrix que descreve seu local e diretriz absolutos
+- Diretriz3D absoluteDiretriz;	//Ângulos absolutos na tela
+- Osso pai;
+- List&lt;Osso&gt; filhos;
+- Carne carne;
+</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Carne" x="31" y="13">		<text>* Carne:
+- Usado para agrupar as Peles de forma lógica.
+
++ Variáveis:
+- Osso osso;
+- HashMap&lt;Double, HashMap&lt;Double, HashMap&lt;Double, HashMap&lt;Double, HashMap&lt;Double, Pele&gt;&gt;&gt;&gt;&gt; peles;
+- Image imagem;	//Usada para desenhar caso não tenha mudado nada
+</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Pele" x="31" y="16">		<text>* Pele:
+- Usado para juntar as Formas e Linhas.
+
++ Variáveis:
+- Carne carne;
+- Diretriz3D absoluteDiretriz;	//Ângulos absolutos na tela(Apenas X e Y)
+- Diretriz3D relativeDiretriz;	//Ângulos relativos ao Osso-pai
+- List&lt;Forma&gt; formas;		//Formas que tenham mudado de Linhas
+- List&lt;Linha&gt; linhas;		//Linhas que tenham mudado de Pontos
+- List&lt;Ponto&gt; pontos;		//Os pontos alterados
+</text>	</mod>	<mod border="0" color="000000" icons="" title="Forma" x="35" y="19">		<text>* Forma:
+- Usado para representar a forma do Personagem.
+
++ Variáveis:
+- Forma formaFinal;	//A Forma que aparece na tela
+- List&lt;Linha&gt; linhas;
+- Color cor;
+- boolean show;
+- draw(Graphics2D imagemEdit);	//Desenha uma forma</text>	</mod>	<mod border="0" color="000000" icons="" title="Linha" x="31" y="22">		<text>* Linha:
+- Extende Spline.
+- Usado para representar o contorno do Personagem.
+
++ Variáveis:
+- Linha linhaFinal;	//A Linha que aparece na tela
+- List&lt;Ponto&gt; pontos;
+- Color cor;
+- boolean show;
+
++ Funções:
+- getForm();
+- getRelativeForm(Ponto2D local, double angle);
+- draw(Graphics2D imagemEdit);	//Desenha uma linha com grossura variada</text>	</mod>	<mod border="0" color="000000" icons="" title="Ponto" x="27" y="25">		<text>* Ponto:
+- Extende Ponto2D.
+- Usado para definir a localização das linhas.
+
++ Variáveis:
+- Ponto pontoFinal;	//O Ponto que aparece na tela
+- double size;
+
++ Funções:
+- getForm();
+- getRelativeForm();
+- draw(Graphics2D imagemEdit);			//Desenha um círculo
+. Para se desenhar relativo ao Osso, se usa o getRelativeLocal(local, angle);</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Criação de Personagem&#10;na Prática" x="26" y="-7">		<text>+ Desenhar um braço:
+- Cada osso tem uma série de retângulos.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Interface" x="15" y="-6">		<text>- Tem efeitos sonoros ao interagir(Besiege).
+- Tem música de fundo, como que em um jogo de construção(Besiege).
+- Tudo é contido em diferentes janelas:
+. Podem ser movidas, redimensionadas, minimizadas, ou fechadas(Eclipse).
+. Podem ser separadas em janelas independentes(Eclipse).
+. Podem ser reabertas ao clicar nos pequenos ícones que ficam no canto(Paint.net).
+- Cores tema:
+. Podem ser light, dark ou custom(Notepad++).
+- Dicas:
+. Acionado com um ícone no canto(Paint.net).
+. Ao clicar em qualquer coisa, revela o que ela faz e como usá-la, com exemplos.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Funções Necessárias" x="31" y="-2">		<text>+ Geral:
+- Uma linha pode ser dividida em qualquer parte. Usado para separar linhas.
+- Uma linha pode ter um ponto adicionado em qualquer parte. Usado para manipular a grossura e adicionar curvas.
+- Uma linha pode ter um ponto subtraído. Usado para simplificar a linha.
+
++ Linha:
+- Linha invisível:
+. Tem cor inversa da cor da Forma.
+. Necessário para criar imagens sem contorno, onde cores simplesmente mudam de uma para outra.
+. Podem ser linhas com grossura 0, o que permite criar linhas compostas, onde a grossura pode variar de aparente para invisível. Automaticamente recebe uma cor para destacá-la.
+- Linha texturizada:
+. Tem cor de um fundo dado, seja gradiente, imagem, etc.
+. Necessário para criar efeitos especiais.
+. Pode ser linhas que receberam imagens ou gradientes.
+
++ Forma:
+- Forma subtrator:
+. Tem cor transparente.
+. Necessário para recortar formas e criar detalhes como furos e rasgos.
+. Sua subtração retira tudo atrás até restar apenas a cor transparente.
+. Pode ser formas que receberam cor transparente.
+- Forma texturizada:
+. Tem cor de um fundo dado, seja gradiente, imagem, etc.
+. Necessário para criar efeitos especiais e texturas.
+. Pode ser formas que receberam imagens ou gradientes.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Idéias" x="9" y="-2">		<text>+ Idéias:
+- Ossos podem ser esticados e dobrados.
+. Um ou mais podem ser afetados ao mesmo tempo.
+. Um dos efeitos que podem ser aplicados é o esticar e dobra do personagem, cada osso sofre do efeito, que junto mostra o personagem sendo afetado.
+- Plano de referência:
+. É uma tela transparente que pode receber imagens.
+. São vários os desenhos, guardados em uma lista.
+- Ao clicar em um osso, o leftMouse move o ângulo Y, o rightMouse move o X, e o middleMouse move o Z.
+- O ângulo X é vermelho, o Y é azul, e o Z é verde.
+- As Linhas com grossura variante usam Perlin Noise.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Técnicas e Efeitos" x="28" y="1">		<text>- Brilho atrás do personagem:
+. Lista todos os fundos do personagem, pinta da cor desejada e os borra.
+- Efeitos especiais podem ser programados? Tem variáveis?
+- Sombras:
+. Lista todos os fundos do personagem, pinta de preto e os borra.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Mecânica" x="24" y="-2">		<text>- Pode-se criar camadas e sub-camadas até o nível de linhas e pontos.
+- A animação ocorre por keyFrames, os inBetweenFrames sendo adicionados no final, antes do retoque final.
+. Pode-se escolher a velocidade dentre as keyFrames, definindo a quantidade de inBetweenFrames.
+- A animação pode ser feita com captura por arduino em um exoesqueleto. Ou por um puppet com um arduino dentro ou fora em uma base.
+. O puppet pode ser desmontado e remontado como se fosse um bionicle. Uma série de ossos(Pequeno, médio e longo) que podem ser conectados juntos.
+- Um auto-save ocorre a cada x minutos.
+. É deletado ao fechar.
+. Caso exista um auto-save, pergunta se deseja usá-lo.</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Ferramentas" x="-2" y="-14">		<text>- Todos tem atalhos que podem ser customizados.
+
++ Mão:
+- Icone: Uma mão.
+- Arrasta a tela.
+- Pode ser usado com middle-drag.
+
++ Mover:
+- Icone: Setas em 4 direções.
+- Move a seleção.
+- Pode-se mover de acordo com um ponto central.
+. O ponto pode ser livre ou ser um Ponto ou base de um Osso.
+
++ Seletor:
+- Icone: Um retângulo com bordas pontilhadas.
+- Seleciona uma área.
+- Opções:
+. Seleção em área retângular.
+. Seleção com laço.
+. Seleção com varinha mágica.
+
++ Adicionar Vetor:
+- Icone: Uma linha com pontos.
+- Adiciona um vetor spline catmullRoom.
+- Adiciona uma parte nova a um vetor selecionado.
+
++ Cortar Vetor:
+- Icone: Uma tesoura.
+- Separa um ponto de um vetor selecionado.
+
++ Bomba:
+- Icone: Uma bomba de ar.
+
++ Formatos Geométricos:
+- Icone: Várias formas geométricas.
+- Adiciona vetores com formas geométricas prontas.
+- Tem uma interface onde pode criar novas formas customizadas que podem ser usadas depois.
+
++ Gradiente:
+- Icone: Um quadrado com uma cor em gradiente.
+- Adiciona um fundo a uma Forma/Linha.
+
++ Balde:
+- Icone: Um balde derramando tinta.
+- Adiciona uma cor a uma Forma/Linha.
+
++ Imagem:
+- Icone: Um icone de imagem.
+- Adiciona uma imagem de fundo a uma Forma/Linha.
+
++ Seringa:
+- Icone: Uma seringa.
+- Pega uma cor da tela.
+</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Abas" x="16" y="-17">		<text>+ Fundo:
+- É onde se cria os fundos.
+. Uma montanha de Linhas e Formas.
+. Possíveis partes que serão movíveis na animação.
+
++ Personagem:
+- É onde se cria os personagens.
+. O esqueleto, as peles e toda a mecânica.
+
++ Animação:
+- É onde os fundos e personagens se juntam e são animados.
+
++ Pós-Efeitos:
+- É onde os efeitos especiais e não vetoriais são adicionados.
+
++ Retoques Finais:
+- É onde é finalizado, passa pela revisão, retoques e é exportado.</text>	</mod>	<mod border="0" color="00C81B" icons="" title="Fundo" x="10" y="-13">		<text>+ Fundo:
+- É onde se cria os fundos usados na animação.
+- Os elementos podem ser agrupados em camadas.
+
++ Janelas:
+- Ferramentas.
+- Camadas.
+. Grupos de Linhas e Formas.
+- Tela de Desenho.
+. Onde se desenha o fundo.
+- Tela das partes movíveis?</text>	</mod>	<mod border="0" color="FFE7DE" icons="" title="Personagem" x="5" y="-18">		<text>+ Personagem:
+- É onde se cria os personagens a serem usados.
+
++ Janelas:
+- Ferramentas.
+- Tela de Construção.
+. Desenha a Pele no Osso.
+- Tela de Configuração.
+. Configura as posições dos Ossos e Peles.
+- Tela de Visualização.
+. Mostra o resultado final, o personagem e suas posições.</text>	</mod>	<mod border="0" color="33CCFF" icons="" title="Animação" x="15" y="-22">		<text>+ Janelas:
+- Lista de KeyFrames.
+. Posições e fundos que ocorrem na animação.
+- Tela de Animação.
+. Onde ocorre a animação.
+- Tela de Configuração.
+. Configura a pose dos personagens, fundos.</text>	</mod>	<mod border="0" color="FFFF00" icons="" title="Pós-Efeitos" x="23" y="-18">		<text>+ Pós Efeitos:
+- É onde pode-se aplicar animação frame-by-frame.
+
++ Janelas:
+- Ferramentas?
+- Tela de Efeitos.
+- Tela de Visualização.
+. Mostra a animação com o efeito aplicado.</text>	</mod>	<mod border="0" color="000000" icons="" title="Retoques Finais" x="21" y="-13">		<text>+ Retoques Finais:
+- É onde ocorrem as correções de erros e definição da framerate e tipo de vídeo.
+
++ Janelas:
+- Tela de Visualização.
+. Mostra o resultado final.
+- Tela de Configurações.
+. Opções de exportação.
+. Opções de FPS(1 a 120).</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Camadas" x="-1" y="-11">		<text>- Diferentes Linhas e Formas podem ser agrupados em diferentes camadas(Build3D, Paint.net).
+. Eles podem ser feitos ou  "trocados" para diferentes camadas.
+- Cada camada tem 2 imagens: Uma é a de todos os seus elementos e a outra é dela e todos das camadas de baixo.
+- O maior propósito é para separar os elementos de forma que não cause lag(Desenhar uma imagem em vez de cada elemento separados).
+- Permite subcamadas?
+- Mostra elementos?</text>	</mod>	<mod border="0" color="D8D8D8" icons="" title="Texturas de Linha" x="-15" y="-14">		<text>+ Normal:
+- A grossura e posição dos pontos variam ligeiramente do original.
+- Imita a linha feita manualmente.
+
++ Artificial:
+- A grossura e posição não são alterados.
+- Dão um ar de artificial e perfeito.
+
++ Pixel:
+- Composto por píxeis.
+- Píxel art.
+
++ Handrawing:
+- A grossura e posição variam imensamente, a ponto das Formas não concidírem com eles.
+- Imita uma arte infantil.
+</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Movimentos" x="14" y="-25">		<text>+ Nenhum:
+- Cada frame é inalterada.
+
++ Clonagem:
+- As partes mais movimentadas são duplicadas.
+
++ Borrão:
+- As partes mais movimentadas deixam um borrão para trás.
+
++ Maleável:
+- As partes mais movimentadas são deformadas.</text>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Player de Vídeo" x="32" y="-13">		<text>+ Interface:
+- Play   Volume   Tempo    Ini Volta AvançaFrame VoltaFrame Avança Fim   Loop   Velocidade   Fullscreen
+
++ Elementos:
+
+- Play/Pause:
+. Icone: Duas barras ou uma seta-direita.
+. Pausa ou despausa o vídeo.
+
+- Volume:
+. Icone: Um som.
+. Muda o volume do vídeo.
+. Um slider(0%-100%).
+
+- Tempo:
+. Mostra o tempo atual e o tempo total do vídeo.
+
+- Começo:
+. Icone: Uma seta-esquerda com uma barra na ponta.
+. Volta para o começo do vídeo.
+
+- Pular Trás:
+. Icone: Uma seta-esquerda com uma barra na ponta.
+. Volta 2s.
+
+- Voltar frame:
+. Icone: Uma seta-esquerda.
+. Volta 1 frame.
+
+- Avançar frame:
+. Icone: Uma seta-direita.
+. Avança 1 frame.
+
+- Pular Frente:
+. Icone: Duas setas-direita.
+. Avança 2s.
+
+- Fim:
+. Icone: Uma seta-direita com uma barra na ponta.
+. Vai para o fim do vídeo.
+
+- Loop:
+. Icone: Uma seta em loop.
+. Recomeça o vídeo no fim ou não.
+
+- Velocidade:
+. Icone: Um velocímetro.
+. Muda a velocidade do vídeo.
+. Um slider com posições fixas(0.13x-0.25x-0.50x-0.75x-1.00x-1.25x-1.50x-1.75-2.00x).
+
+- Fullscreen:
+. Icone: Um quadrado.
+. Muda para tela-cheia ou tira.
+</text>	</mod>	<mod border="0" color="D8D8D8" icons="" title="Elementos" x="-3" y="-18">		<text>- Uma lista com todos os elementos(Linhas, Formas) que pertencem a Pele editada.
+- Cada um dos elementos tem uma imagem e um nome.</text>	</mod>	<mod border="0" color="D8D8D8" icons="" title="Tela de Desenho" x="6" y="-10">		<text/>	</mod>	<mod border="0" color="D8D8D8" icons="" title="Editor de Pele" x="4" y="-21">		<text>- Uma grade com o personagem.</text>	</mod>	<mod border="0" color="D8D8D8" icons="" title="Biblioteca de Efeitos" x="32" y="-18">		<text/>	</mod>	<mod border="0" color="DCDCDC" icons="" title="Biblioteca de Posições" x="22" y="-22">		<text>- Salva posições de Personagens, ou posições de ossos individuais.</text>	</mod>	<mod border="0" color="99FFFF" icons="" title="Extensões" x="24" y="4">		<text>+ Extensões:
+- .mind - Mapa mental.
+- .proj - Dados do projeto.
+- .back/.cene/.draw - Fundo.
+- .char/.enty/.toon - Personagem.
+- .toon/.life/.anim/.film - Animação.
+- .song - Música.
+- .tone/.talk/.call - Voz do personagem.
+- Se ocorrer erro ao ler o arquivo, informa a linha e a possível razão.</text>	</mod>	<mod border="0" color="FFFFFF" icons="" title="Ponto2D" x="20" y="25">		<text>* Ponto2D:
+- Usado para definir uma localização 2D.
+
++ Variáveis:
+- double x;
+- double y;
+
++ Funções:
+- set(double x, double y);
+- set(Ponto2D ponto);
+- add(Ponto2D ponto);
+- sub(Ponto2D ponto);
+- scale(double escala);
+
+- getDistance(Ponto2D ponto);
+- getRelativeLocal(Ponto2D local, double angle);	//Retorna novo local, rotacionado em angle
+- getRelativePoint(double angle, double distance);	//Retorna um Ponto, definido por distance e angle
+- getAngle(Ponto2D ponto);
+
+- getTranslation(double distance X, double distanceY);	//Matrix de transladação
+- getPontoMatrix();				//Ponto2D para matrix
+- getPonto2D(double[][] matrix);			//Matrix para Ponto2D
+- transform(double[][]... matrixes);
+. Aceita somente matrixes de 3x3.
+
+- draw(Graphics2D imagemEdit);			//Desenha um ponto</text>	</mod>	<mod border="0" color="FFFFFF" icons="" title="Spline" x="29" y="28">		<text>* Spline:
+- Usado para representar as linhas curvas.
+
++ Variáveis:
+- List&lt;Ponto2D&gt; pontos;
+- boolean show;
+
++ Funções:
+- catmullRoom(double t, Ponto2D p0, Ponto2D p1, Ponto2D p2, Ponto2D p3);
+- getAllPontos();
+- getForm();
+- getRelativeForm();
+- draw(Graphics2D imagemEdit);	//Desenha uma linha</text>	</mod>	<mod border="0" color="FFFFFF" icons="" title="Diretriz3D" x="16" y="16">		<text>* Diretriz3D:
+- Extende Diretriz2D.
+- Usado para agrupar ângulos 3D.
+
++ Variáveis:
+- double angleZ;
+
++ Funções:
+- getRotationZ();</text>	</mod>	<mod border="0" color="FFFFFF" icons="" title="Diretriz2D" x="12" y="19">		<text>* Diretriz2D:
+- Usado para agrupar ângulos 2D.
+
++ Variáveis:
+- double angleY;
+- double angleX;
+
++ Funções:
+- getRotationY();
+- getRotationX();</text>	</mod>	<mod border="0" color="FFFFFF" icons="" title="Ponto3D" x="23" y="22">		<text>* Ponto3D:
+- Extende Ponto2D.
+- Usado para definir uma localização 3D.
+
++ Variáveis:
+- double z;
+
++ Funções:
+- getDistance(Ponto3D ponto);
+- getRelativeLocal(Ponto3D local, double angle);	//Retorna novo local, rotacionado em angle
+- getRelativePoint(double angle, double distance);	//Retorna um Ponto, definido por distance e angle
+- getAngle(Ponto2D ponto);
+
+- getTranslation(double distance X, double distanceY, double distanceZ);//Matrix de transladação
+- getPontoMatrix();				//Ponto3D para matrix
+- getPonto3D(double[][] matrix);			//Matrix para Ponto3D
+- transform(double[][]... matrixes);
+. Aceita somente matrixes de 4x4.
+
+- draw(Graphics2D imagemEdit);			//Desenha um ponto</text>	</mod>	<cox border="0" pai="0" son="1">		<text/>	</cox>	<cox border="0" pai="0" son="11">		<text/>	</cox>	<cox border="0" pai="0" son="13">		<text/>	</cox>	<cox border="0" pai="0" son="15">		<text/>	</cox>	<cox border="0" pai="1" son="2">		<text/>	</cox>	<cox border="0" pai="2" son="3">		<text/>	</cox>	<cox border="0" pai="3" son="4">		<text/>	</cox>	<cox border="0" pai="4" son="5">		<text/>	</cox>	<cox border="0" pai="4" son="35">		<text/>	</cox>	<cox border="0" pai="4" son="37">		<text/>	</cox>	<cox border="0" pai="5" son="6">		<text/>	</cox>	<cox border="0" pai="6" son="7">		<text/>	</cox>	<cox border="0" pai="6" son="8">		<text/>	</cox>	<cox border="0" pai="6" son="9">		<text/>	</cox>	<cox border="0" pai="6" son="35">		<text/>	</cox>	<cox border="0" pai="8" son="7">		<text/>	</cox>	<cox border="0" pai="8" son="9">		<text/>	</cox>	<cox border="0" pai="34" son="8">		<text/>	</cox>	<cox border="0" pai="33" son="9">		<text/>	</cox>	<cox border="0" pai="15" son="10">		<text/>	</cox>	<cox border="0" pai="11" son="17">		<text/>	</cox>	<cox border="0" pai="15" son="12">		<text/>	</cox>	<cox border="0" pai="15" son="14">		<text/>	</cox>	<cox border="0" pai="15" son="32">		<text/>	</cox>	<cox border="0" pai="18" son="16">		<text/>	</cox>	<cox border="0" pai="19" son="16">		<text/>	</cox>	<cox border="0" pai="16" son="24">		<text/>	</cox>	<cox border="0" pai="17" son="18">		<text/>	</cox>	<cox border="0" pai="17" son="19">		<text/>	</cox>	<cox border="0" pai="17" son="20">		<text/>	</cox>	<cox border="0" pai="17" son="21">		<text/>	</cox>	<cox border="0" pai="17" son="22">		<text/>	</cox>	<cox border="0" pai="18" son="23">		<text/>	</cox>	<cox border="0" pai="18" son="28">		<text/>	</cox>	<cox border="0" pai="19" son="27">		<text/>	</cox>	<cox border="0" pai="19" son="29">		<text/>	</cox>	<cox border="0" pai="20" son="25">		<text/>	</cox>	<cox border="0" pai="20" son="31">		<text/>	</cox>	<cox border="0" pai="21" son="30">		<text/>	</cox>	<cox border="0" pai="22" son="26">		<text/>	</cox>	<cox border="0" pai="33" son="37">		<text/>	</cox>	<cox border="0" pai="34" son="33">		<text/>	</cox>	<cox border="0" pai="36" son="35">		<text/>	</cox>
+</mind>
